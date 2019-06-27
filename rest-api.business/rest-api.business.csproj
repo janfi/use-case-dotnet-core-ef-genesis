@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <RootNamespace>rest_api.business</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\rest-api.ibusiness\rest-api.ibusiness.csproj" />
+    <ProjectReference Include="..\rest-api.idal\rest-api.idal.csproj" />
+  </ItemGroup>
+
+</Project>
