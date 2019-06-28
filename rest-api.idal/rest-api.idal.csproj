@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\rest-api.models\rest-api.models.csproj" />
+    <ProjectReference Include="..\rest-api.identities\rest-api.identities.csproj" />
   </ItemGroup>
 
 </Project>

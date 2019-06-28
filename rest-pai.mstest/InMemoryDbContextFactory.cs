@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using rest_api;
-using rest_api.models;
+using rest_api.identities;
 using System;
 using System.Collections.Generic;
 using System.Text;

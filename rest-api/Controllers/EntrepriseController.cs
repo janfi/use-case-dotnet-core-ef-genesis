@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using rest_api.dto;
 using rest_api.Filters;
 using rest_api.ibusiness;
-using rest_api.models;
 
 namespace rest_api.Controllers
 {
@@ -22,28 +22,28 @@ namespace rest_api.Controllers
 
         // GET api/entreprise
         [HttpGet]
-        public IEnumerable<Entreprise> GetAll()
+        public IEnumerable<EntrepriseDTO> GetAll()
         {
             return _entrepriseBL.GetAll();
         }
 
         // GET api/entreprise/5
         [HttpGet("{id}")]
-        public Entreprise Get(int id)
+        public EntrepriseDTO Get(int id)
         {
             return _entrepriseBL.Get(id);
         }
 
         // POST api/entreprise
         [HttpPost]
-        public Entreprise Add([FromBody] Entreprise entity)
+        public EntrepriseDTO Add([FromBody] EntrepriseDTO entity)
         {
             return _entrepriseBL.Add(entity);
         }
 
         // PUT api/entreprise/5
         [HttpPut()]
-        public bool Update([FromBody] Entreprise entity)
+        public bool Update([FromBody] EntrepriseDTO entity)
         {
             _entrepriseBL.Update(entity);
             return true;

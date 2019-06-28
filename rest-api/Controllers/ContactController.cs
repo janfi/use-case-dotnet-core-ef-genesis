@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using rest_api.Filters;
+using rest_api.dto;
 using rest_api.ibusiness;
-using rest_api.models;
 
 namespace rest_api.Controllers
 {
@@ -22,28 +19,28 @@ namespace rest_api.Controllers
 
         // GET api/contact
         [HttpGet]
-        public IEnumerable<Contact> GetAll()
+        public IEnumerable<ContactDTO> GetAll()
         {
             return _contactBL.GetAll();
         }
 
         // GET api/contact/5
         [HttpGet("{id}")]
-        public Contact Get(int id)
+        public ContactDTO Get(int id)
         {
             return _contactBL.Get(id);
         }
 
         // POST api/contact
         [HttpPost]
-        public Contact Add([FromBody] Contact entity)
+        public ContactDTO Add([FromBody] ContactDTO entity)
         {
             return _contactBL.Add(entity);
         }
 
         // PUT api/contact
         [HttpPut()]
-        public bool Update([FromBody] Contact entity)
+        public bool Update([FromBody] ContactDTO entity)
         {
             _contactBL.Update(entity);
             return true;

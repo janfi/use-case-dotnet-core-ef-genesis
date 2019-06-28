@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace restapi.Migrations
 {
-    public partial class rest_apimodelsDbCtx : Migration
+    public partial class rest_apiidentitiesDbCtx : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

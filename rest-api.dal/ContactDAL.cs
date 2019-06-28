@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using rest_api.domain;
 using rest_api.idal;
-using rest_api.models;
+using rest_api.identities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,28 +17,32 @@ namespace rest_api.dal
             _ctx = dbCtx;
         }
 
-        public IEnumerable<Contact> GetAll()
+        public IEnumerable<ContactModel> GetAll()
         {
-            return _ctx.Contact.ToList();
+            return _ctx.Contact.ToList().Select(c => Contact.toModel(c));
         }
 
-        public Contact Get(long id)
+        public ContactModel Get(long id)
         {
-            return _ctx.Contact
+            return Contact.toModel(_ctx.Contact
                   .Include(e => e.Contracts)
-                  .FirstOrDefault(c => c.ContactId == id);
+                  .FirstOrDefault(c => c.ContactId == id));
         }
 
-        public Contact Add(Contact entity)
+        public ContactModel Add(ContactModel contact)
         {
+            Contact entity = Contact.formModel(contact);
             _ctx.Contact.Add(entity);
             _ctx.SaveChanges();
 
-            return entity;
+            return Contact.toModel(entity);
         }
 
-        public void Update(Contact dBentity, Contact entity)
+        public void Update(ContactModel dBcontact, ContactModel contact)
         {
+            Contact dBentity = Contact.formModel(dBcontact);
+            Contact entity = Contact.formModel(contact);
+
             _ctx.Entry(dBentity).CurrentValues.SetValues(entity);
             _ctx.Entry(dBentity.Address).CurrentValues.SetValues(entity.Address);
 
@@ -73,20 +78,22 @@ namespace rest_api.dal
             _ctx.SaveChanges();
         }
 
-        public void Delete(Contact contact)
+        public void Delete(ContactModel contact)
         {
-            foreach (var child in contact.Contracts)
+            Contact entity = Contact.formModel(contact);
+            foreach (var child in entity.Contracts)
             {
                 _ctx.Contract.Remove(child);
             }
-            _ctx.Contact.Remove(contact);
+            _ctx.Contact.Remove(entity);
             _ctx.SaveChanges();
         }
 
-        public void Remove(Contact contact)
+        public void Remove(ContactModel contact)
         {
-            contact.DeletedDate = DateTime.UtcNow;
-            foreach (var child in contact.Contracts)
+            Contact entity = Contact.formModel(contact);
+            entity.DeletedDate = DateTime.UtcNow;
+            foreach (var child in entity.Contracts)
             {
                 child.DeletedDate = DateTime.UtcNow;
             }

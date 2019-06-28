@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using rest_api.domain;
 using rest_api.idal;
-using rest_api.models;
+using rest_api.identities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,28 +18,32 @@ namespace rest_api.dal
             _ctx = dbCtx;
         }
 
-        public IEnumerable<Entreprise> GetAll()
+        public IEnumerable<EntrepriseModel> GetAll()
         {
-            return _ctx.Entreprise.ToList();
+            return _ctx.Entreprise.ToList().Select(e => Entreprise.toModel(e));
         }
 
-        public Entreprise Get(long id)
+        public EntrepriseModel Get(long id)
         {
-            return _ctx.Entreprise
+            return Entreprise.toModel(_ctx.Entreprise
                   .Include(e => e.Entities)
                   .Include(e => e.Contracts)
-                  .FirstOrDefault(e => e.EntrepriseId == id);
+                  .FirstOrDefault(e => e.EntrepriseId == id));
         }
 
-        public Entreprise Add(Entreprise entity)
+        public EntrepriseModel Add(EntrepriseModel entreprise)
         {
+            Entreprise entity = Entreprise.formModel(entreprise);
             _ctx.Entreprise.Add(entity);
             _ctx.SaveChanges();
-            return entity;
+            return Entreprise.toModel(entity);
         }
 
-        public void Update(Entreprise dBentity, Entreprise entity)
+        public void Update(EntrepriseModel dBentreprise, EntrepriseModel entreprise)
         {
+            Entreprise dBentity = Entreprise.formModel(dBentreprise);
+            Entreprise entity = Entreprise.formModel(entreprise);
+
             _ctx.Entry(dBentity).CurrentValues.SetValues(entity);
 
             // Delete Entities
@@ -112,28 +117,30 @@ namespace rest_api.dal
             _ctx.SaveChanges();
         }
 
-        public void Delete(Entreprise entreprise)
+        public void Delete(EntrepriseModel entreprise)
         {
-            foreach (var child in entreprise.Entities)
+            Entreprise entity = Entreprise.formModel(entreprise);
+            foreach (var child in entity.Entities)
             {
                 _ctx.Entity.Remove(child);
             }
-            foreach (var child in entreprise.Contracts)
+            foreach (var child in entity.Contracts)
             {
                 _ctx.Contract.Remove(child);
             }
-            _ctx.Entreprise.Remove(entreprise);
+            _ctx.Entreprise.Remove(entity);
             _ctx.SaveChanges();
         }
 
-        public void Remove(Entreprise entreprise)
+        public void Remove(EntrepriseModel entreprise)
         {
+            Entreprise entity = Entreprise.formModel(entreprise);
             entreprise.DeletedDate = DateTime.UtcNow;
-            foreach (var child in entreprise.Entities)
+            foreach (var child in entity.Entities)
             {
                 child.DeletedDate = DateTime.UtcNow;
             }
-            foreach (var child in entreprise.Contracts)
+            foreach (var child in entity.Contracts)
             {
                 child.DeletedDate = DateTime.UtcNow;
             }

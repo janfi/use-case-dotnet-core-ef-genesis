@@ -18,7 +18,6 @@
   <ItemGroup>
     <ProjectReference Include="..\rest-api.business\rest-api.business.csproj" />
     <ProjectReference Include="..\rest-api.dal\rest-api.dal.csproj" />
-    <ProjectReference Include="..\rest-api.models\rest-api.models.csproj" />
   </ItemGroup>
 
 </Project>

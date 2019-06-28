@@ -3,7 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using rest_api.models;
+using rest_api.identities;
 
 namespace restapi.Migrations
 {
@@ -16,7 +16,7 @@ namespace restapi.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.1.11-servicing-32099");
 
-            modelBuilder.Entity("rest_api.models.Contact", b =>
+            modelBuilder.Entity("rest_api.identities.Contact", b =>
                 {
                     b.Property<int>("ContactId")
                         .ValueGeneratedOnAdd();
@@ -36,7 +36,7 @@ namespace restapi.Migrations
                     b.ToTable("Contact");
                 });
 
-            modelBuilder.Entity("rest_api.models.Contract", b =>
+            modelBuilder.Entity("rest_api.identities.Contract", b =>
                 {
                     b.Property<int>("ContactId");
 
@@ -59,7 +59,7 @@ namespace restapi.Migrations
                     b.ToTable("Contract");
                 });
 
-            modelBuilder.Entity("rest_api.models.Entity", b =>
+            modelBuilder.Entity("rest_api.identities.Entity", b =>
                 {
                     b.Property<int>("EntityId")
                         .ValueGeneratedOnAdd();
@@ -81,7 +81,7 @@ namespace restapi.Migrations
                     b.ToTable("Entity");
                 });
 
-            modelBuilder.Entity("rest_api.models.Entreprise", b =>
+            modelBuilder.Entity("rest_api.identities.Entreprise", b =>
                 {
                     b.Property<int>("EntrepriseId")
                         .ValueGeneratedOnAdd();
@@ -102,9 +102,9 @@ namespace restapi.Migrations
                     b.ToTable("Entreprise");
                 });
 
-            modelBuilder.Entity("rest_api.models.Contact", b =>
+            modelBuilder.Entity("rest_api.identities.Contact", b =>
                 {
-                    b.OwnsOne("rest_api.models.Address", "Address", b1 =>
+                    b.OwnsOne("rest_api.identities.Address", "Address", b1 =>
                         {
                             b1.Property<int>("ContactId");
 
@@ -114,34 +114,34 @@ namespace restapi.Migrations
 
                             b1.ToTable("Contact");
 
-                            b1.HasOne("rest_api.models.Contact")
+                            b1.HasOne("rest_api.identities.Contact")
                                 .WithOne("Address")
-                                .HasForeignKey("rest_api.models.Address", "ContactId")
+                                .HasForeignKey("rest_api.identities.Address", "ContactId")
                                 .OnDelete(DeleteBehavior.Cascade);
                         });
                 });
 
-            modelBuilder.Entity("rest_api.models.Contract", b =>
+            modelBuilder.Entity("rest_api.identities.Contract", b =>
                 {
-                    b.HasOne("rest_api.models.Contact", "Contact")
+                    b.HasOne("rest_api.identities.Contact", "Contact")
                         .WithMany("Contracts")
                         .HasForeignKey("ContactId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("rest_api.models.Entreprise", "Entreprise")
+                    b.HasOne("rest_api.identities.Entreprise", "Entreprise")
                         .WithMany("Contracts")
                         .HasForeignKey("EntrepriseId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("rest_api.models.Entity", b =>
+            modelBuilder.Entity("rest_api.identities.Entity", b =>
                 {
-                    b.HasOne("rest_api.models.Entreprise", "Entreprise")
+                    b.HasOne("rest_api.identities.Entreprise", "Entreprise")
                         .WithMany("Entities")
                         .HasForeignKey("EntrepriseId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.OwnsOne("rest_api.models.Address", "Address", b1 =>
+                    b.OwnsOne("rest_api.identities.Address", "Address", b1 =>
                         {
                             b1.Property<int>("EntityId");
 
@@ -151,9 +151,9 @@ namespace restapi.Migrations
 
                             b1.ToTable("Entity");
 
-                            b1.HasOne("rest_api.models.Entity")
+                            b1.HasOne("rest_api.identities.Entity")
                                 .WithOne("Address")
-                                .HasForeignKey("rest_api.models.Address", "EntityId")
+                                .HasForeignKey("rest_api.identities.Address", "EntityId")
                                 .OnDelete(DeleteBehavior.Cascade);
                         });
                 });

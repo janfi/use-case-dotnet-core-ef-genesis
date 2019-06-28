@@ -3,7 +3,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
-namespace rest_api.models
+namespace rest_api.identities
 {
     public class DbCtx: DbContext
     {

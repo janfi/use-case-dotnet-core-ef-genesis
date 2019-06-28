@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace rest_api.models
+namespace rest_api.identities
 {
     public class BaseClass
     {

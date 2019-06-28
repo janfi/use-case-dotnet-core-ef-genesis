@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-    <RootNamespace>rest_api.ibusiness</RootNamespace>
+    <RootNamespace>rest_api.domain</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,8 +1,9 @@
-﻿using rest_api.ibusiness;
+﻿using rest_api.dto;
+using rest_api.ibusiness;
 using rest_api.idal;
-using rest_api.models;
-using System;
+using System.Linq;
 using System.Collections.Generic;
+using rest_api.domain;
 
 namespace rest_api.business
 {
@@ -15,37 +16,39 @@ namespace rest_api.business
             _entrepriseDAL = EntrepriseDAL;
         }
 
-        public IEnumerable<Entreprise> GetAll()
+        public IEnumerable<EntrepriseDTO> GetAll()
         {
-            return _entrepriseDAL.GetAll();
+            return _entrepriseDAL.GetAll().Select(c => EntrepriseModel.toDTO(c));
         }
 
-        public Entreprise Get(int id)
+        public EntrepriseDTO Get(int id)
         {
-            return _entrepriseDAL.Get(id);
+            return EntrepriseModel.toDTO(_entrepriseDAL.Get(id));
         }
 
-        public Entreprise Add(Entreprise entity)
+        public EntrepriseDTO Add(EntrepriseDTO entity)
         {
-            return _entrepriseDAL.Add(entity);
+            EntrepriseModel entreprise = EntrepriseModel.formDTO(entity);
+            return EntrepriseModel.toDTO(_entrepriseDAL.Add(entreprise));
         }
 
-        public void Update(Entreprise entity)
+        public void Update(EntrepriseDTO entity)
         {
-            Entreprise dBentity = Get(entity.EntrepriseId);
-            _entrepriseDAL.Update(dBentity, entity);
+            EntrepriseModel dBentity = _entrepriseDAL.Get(entity.EntrepriseId);
+            _entrepriseDAL.Update(dBentity, EntrepriseModel.formDTO(entity));
+
         }
 
         public void Delete(int id)
         {
-            Entreprise dbEntity = Get(id);
-            _entrepriseDAL.Delete(dbEntity);
+            EntrepriseModel dBentity = _entrepriseDAL.Get(id);
+            _entrepriseDAL.Delete(dBentity);
         }
 
         public void Remove(int id)
         {
-            Entreprise dbEntity = Get(id);
-            _entrepriseDAL.Remove(dbEntity);
+            EntrepriseModel dBentity = _entrepriseDAL.Get(id);
+            _entrepriseDAL.Remove(dBentity);
         }
     }
 }

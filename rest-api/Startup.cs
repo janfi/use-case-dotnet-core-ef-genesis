@@ -9,15 +9,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using rest_api.business;
 using rest_api.dal;
 using rest_api.Filters;
 using rest_api.Filters.Models;
 using rest_api.ibusiness;
 using rest_api.idal;
-using rest_api.models;
+using rest_api.identities;
 
 namespace rest_api
 {

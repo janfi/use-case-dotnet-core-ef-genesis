@@ -1,9 +1,10 @@
-﻿using rest_api.ibusiness;
+﻿using rest_api.domain;
+using rest_api.dto;
+using rest_api.ibusiness;
 using rest_api.idal;
-using rest_api.models;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace rest_api.business
 {
@@ -17,37 +18,39 @@ namespace rest_api.business
             _contactDAL = ContactDAL;
         }
 
-        public IEnumerable<Contact> GetAll()
+        public IEnumerable<ContactDTO> GetAll()
         {
-            return _contactDAL.GetAll();
+            return _contactDAL.GetAll().Select(c => ContactModel.toDTO(c)); ;
         }
 
-        public Contact Get(int id)
+        public ContactDTO Get(int id)
         {
-            return _contactDAL.Get(id);
+            return ContactModel.toDTO(_contactDAL.Get(id));
         }
 
-        public Contact Add(Contact entity)
+        public ContactDTO Add(ContactDTO entity)
         {
-             return _contactDAL.Add(entity);
+            ContactModel contact = ContactModel.formDTO(entity);
+            return ContactModel.toDTO(_contactDAL.Add(contact));
         }
 
-        public void Update( Contact entity)
+        public void Update(ContactDTO entity)
         {
-            Contact dBentity = Get(entity.ContactId);
-            _contactDAL.Update(dBentity, entity);
+            ContactModel dBentity = _contactDAL.Get(entity.ContactId);
+
+            _contactDAL.Update(dBentity, ContactModel.formDTO(entity));
         }
 
         public void Delete(int id)
         {
-            Contact dbEntity = Get(id);
-            _contactDAL.Delete(dbEntity);
+            ContactModel dBentity = _contactDAL.Get(id);
+            _contactDAL.Delete(dBentity);
         }
 
         public void Remove(int id)
         {
-            Contact dbEntity = Get(id);
-            _contactDAL.Remove(dbEntity);
+            ContactModel dBentity = _contactDAL.Get(id);
+            _contactDAL.Remove(dBentity);
         }
     }
 }
