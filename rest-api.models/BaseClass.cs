@@ -9,7 +9,6 @@ namespace rest_api.models
     {
         public DateTime CreatedDate { get; set; } = DateTime.Now;
         public DateTime? UpdatedDate { get; set; }
-        [JsonIgnore]
         public DateTime? DeletedDate { get; set; }
 
     }
